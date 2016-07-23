@@ -72,7 +72,11 @@ void EnumGenerator::Generate(io::Printer* printer) {
       string name = options()->legacy_enum_values
           ? descriptor_->value(i)->name()
           : GetEnumValueName(descriptor_->name(), descriptor_->value(i)->name());
-      // Make sure we don't get any duplicate names due to prefix removal.
+
+      if (descriptor_->value(i)->options().has_scoped_alias())
+          name = descriptor_->value(i)->options().scoped_alias();
+      
+	  // Make sure we don't get any duplicate names due to prefix removal.
       while (!used_names.insert(name).second) {
         // It's possible we'll end up giving this warning multiple times, but that's better than not at all.
         GOOGLE_LOG(WARNING) << "Duplicate enum value " << name << " (originally " << original_name
