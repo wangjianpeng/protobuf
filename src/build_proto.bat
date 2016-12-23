@@ -1,0 +1,1 @@
+..\cmake\release\protoc.exe -I.  --cpp_out=dllexport_decl=LIBPROTOBUF_EXPORT:.  google\protobuf\descriptor.proto
